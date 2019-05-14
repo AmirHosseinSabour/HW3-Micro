@@ -112,7 +112,6 @@ int main(void)
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-		HAL_UART_Receive_IT(&huart2, (uint8_t *)rcvd, 8);
 		if (rcvd[6]==200 & rcvd[7]==200 & rcvd[0]==255 & rcvd[1]==255){
 			
 			if (rcvd[2] == 1){
@@ -121,9 +120,27 @@ int main(void)
 			else{
 			HAL_GPIO_WritePin(GPIOD, GPIO_PIN_12, GPIO_PIN_RESET);
 			}
-		
-		
 			
+			if (rcvd[3] == 1){
+			HAL_GPIO_WritePin(GPIOD, GPIO_PIN_13, GPIO_PIN_SET);
+			} 
+			else{
+			HAL_GPIO_WritePin(GPIOD, GPIO_PIN_13, GPIO_PIN_RESET);
+			}
+			
+			if (rcvd[4] == 1){
+			HAL_GPIO_WritePin(GPIOD, GPIO_PIN_14, GPIO_PIN_SET);
+			} 
+			else{
+			HAL_GPIO_WritePin(GPIOD, GPIO_PIN_14, GPIO_PIN_RESET);
+			}
+			
+			if (rcvd[5] == 1){
+			HAL_GPIO_WritePin(GPIOD, GPIO_PIN_15, GPIO_PIN_SET);
+			} 
+			else{
+			HAL_GPIO_WritePin(GPIOD, GPIO_PIN_15, GPIO_PIN_RESET);
+			}		
 	}
 		
   }
