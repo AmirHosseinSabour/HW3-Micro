@@ -21,7 +21,6 @@
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 
-
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "stdio.h"
@@ -94,27 +93,18 @@ int main(void)
   MX_GPIO_Init();
   MX_USART2_UART_Init();
   /* USER CODE BEGIN 2 */
-
+	 uint8_t rcvd[8];
   /* USER CODE END 2 */
-	char line[64];
-	uint16_t T1 = HAL_GetTick() ;
+
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-	for(int i=0 ; i < 2000 ; i++){
-			sprintf(line, "Hello UART: %d", i);
-			HAL_UART_Transmit(& huart2, (uint8_t *)line, strlen(line), HAL_MAX_DELAY);
-		
-	}
 	
-	uint16_t T2 = HAL_GetTick() ;
-	uint16_t Transmission_time = (T2 - T1)*0.001;
-	
-	sprintf(line, "Total Transmission time equals : %d seconds" , Transmission_time);
-	HAL_UART_Transmit(&huart2, (uint8_t *)line, strlen(line), HAL_MAX_DELAY);
+	HAL_UART_Receive_IT(&huart2, (uint8_t *)rcvd, 8);
 	
 	
-		
-		
+	
+	
+	
 		
 		
   while (1)
@@ -122,6 +112,20 @@ int main(void)
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
+		HAL_UART_Receive_IT(&huart2, (uint8_t *)rcvd, 8);
+		if (rcvd[6]==200 & rcvd[7]==200 & rcvd[0]==255 & rcvd[1]==255){
+			
+			if (rcvd[2] == 1){
+			HAL_GPIO_WritePin(GPIOD, GPIO_PIN_12, GPIO_PIN_SET);
+			} 
+			else{
+			HAL_GPIO_WritePin(GPIOD, GPIO_PIN_12, GPIO_PIN_RESET);
+			}
+		
+		
+			
+	}
+		
   }
   /* USER CODE END 3 */
 }
@@ -185,7 +189,7 @@ static void MX_USART2_UART_Init(void)
 
   /* USER CODE END USART2_Init 1 */
   huart2.Instance = USART2;
-  huart2.Init.BaudRate = 1000000;
+  huart2.Init.BaudRate = 115200;
   huart2.Init.WordLength = UART_WORDLENGTH_8B;
   huart2.Init.StopBits = UART_STOPBITS_1;
   huart2.Init.Parity = UART_PARITY_NONE;
