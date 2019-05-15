@@ -61,7 +61,7 @@ static void MX_USART2_UART_Init(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-volatile int flag;
+ int flag;
 /* USER CODE END 0 */
 
 /**
@@ -336,12 +336,12 @@ static void MX_GPIO_Init(void)
 void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 {
   /* Prevent unused argument(s) compilation warning */
-  UNUSED(GPIO_Pin);
+  //UNUSED(GPIO_Pin);
   /* NOTE: This function Should not be modified, when the callback is needed,
            the HAL_GPIO_EXTI_Callback could be implemented in the user file
    */
 	
-	flag = 1;
+
 	
 }
 /* USER CODE END 4 */
