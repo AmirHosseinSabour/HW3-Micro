@@ -1,0 +1,8 @@
+git add <file> (git add Src/main.c)
+git commit -m "Your description goes here" (git commit -m "My first commit")
+git status (To see what has changed, what you have added to your current commit, ....)
+git log (To see all the previous commits)
+git checkout <commit id> (To go to previous commit)
+git stash (If you have accidentally changed something since last commit and you want to discard those changes)
+git checkout master (To return to the head of the project when checked out on a previous commit)
+git reset (To remove everything from being commited)

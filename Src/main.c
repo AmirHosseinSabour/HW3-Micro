@@ -20,11 +20,13 @@
 
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
+#include "stdio.h"
+#include "string.h"
+
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include "stdio.h"
-#include "string.h"
+
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -59,10 +61,7 @@ static void MX_USART2_UART_Init(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-
-
-
-
+volatile int flag;
 /* USER CODE END 0 */
 
 /**
@@ -72,7 +71,8 @@ static void MX_USART2_UART_Init(void);
 int main(void)
 {
   /* USER CODE BEGIN 1 */
-
+	char msg[8];
+	sprintf(msg , "User Key pressed");
   /* USER CODE END 1 */
   
 
@@ -96,22 +96,20 @@ int main(void)
   MX_GPIO_Init();
   MX_USART2_UART_Init();
   /* USER CODE BEGIN 2 */
-	 
+
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-	
-	
-	
   while (1)
   {
     /* USER CODE END WHILE */
-		HAL_GPIO_TogglePin(GPIOD, GPIO_PIN_12);
-		HAL_Delay(500);	
+
     /* USER CODE BEGIN 3 */
-		
-		
+		if (flag){
+		HAL_UART_Transmit(&huart2, (uint8_t *)msg, strlen(msg),100);
+		flag--;
+		}
   }
   /* USER CODE END 3 */
 }
@@ -342,9 +340,8 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
   /* NOTE: This function Should not be modified, when the callback is needed,
            the HAL_GPIO_EXTI_Callback could be implemented in the user file
    */
-	char msg[8];
-	sprintf(msg, "User Key pressed");
-	HAL_UART_Transmit(&huart2 , (uint8_t *)msg, strlen(msg), HAL_MAX_DELAY);
+	flag = 1;
+	
 }
 /* USER CODE END 4 */
 
